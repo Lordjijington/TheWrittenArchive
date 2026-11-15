@@ -1,46 +1,601 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>The Bitter Hollow</title>
-    <style>
-        body {
-            background: #171717;
-            color: white;
-            font-family: Georgia, serif;
-            text-align: center;
-            padding: 40px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Written Archive</title>
 
-        h1 {
-            font-size: 40px;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
-        .book {
-            background: #292929;
-            padding: 25px;
-            margin: 25px auto;
-            max-width: 400px;
-            border-radius: 12px;
-        }
+<style>
+:root {
+    --navy: #080d1b;
+    --navy-light: #111a30;
+    --gold: #d8c2a2;
+    --gold-dim: #8e7b68;
+    --white: #eee8e0;
+    --muted: #aaa4a4;
+}
 
-        a {
-            color: #d6b98c;
-        }
-    </style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+}
+
+/* STAR NIGHT SKY */
+
+.sky {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+        radial-gradient(ellipse at 50% 35%, #192342 0%, transparent 48%),
+        radial-gradient(ellipse at 80% 10%, #222344 0%, transparent 40%),
+        radial-gradient(ellipse at 15% 85%, #171e3b 0%, transparent 45%),
+        #050a16;
+}
+
+.stars {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, white 99%, transparent),
+        radial-gradient(1px 1px at 25% 70%, #d9c9ff 99%, transparent),
+        radial-gradient(2px 2px at 50% 35%, white 99%, transparent),
+        radial-gradient(1px 1px at 70% 15%, white 99%, transparent),
+        radial-gradient(1px 1px at 85% 65%, #c9c4ff 99%, transparent),
+        radial-gradient(2px 2px at 95% 30%, white 99%, transparent),
+        radial-gradient(1px 1px at 40% 90%, white 99%, transparent);
+    background-size: 250px 250px, 300px 300px,
+        350px 350px, 280px 280px,
+        320px 320px, 400px 400px, 270px 270px;
+    opacity: .75;
+}
+
+/* NAVIGATION */
+
+header {
+    height: 82px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #bba58a35;
+    background: #080d1bba;
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    color: var(--gold);
+    letter-spacing: 5px;
+    font-size: 20px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+nav {
+    display: flex;
+    gap: 35px;
+}
+
+nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 17px;
+    letter-spacing: 2px;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: var(--gold);
+}
+
+.menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 27px;
+    cursor: pointer;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 680px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px 120px;
+    position: relative;
+}
+
+.hero-star {
+    font-size: 65px;
+    color: var(--gold);
+    text-shadow: 0 0 25px #d8c2a277;
+    margin-bottom: 10px;
+}
+
+.eyebrow {
+    color: var(--gold-dim);
+    font-size: 17px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(45px, 8vw, 100px);
+    font-weight: 400;
+    letter-spacing: 8px;
+    color: var(--gold);
+    margin: 12px 0 20px;
+    text-shadow: 0 0 35px #c9b6a333;
+}
+
+.line {
+    width: 180px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 10px auto 25px;
+}
+
+.tagline {
+    font-size: 25px;
+    font-style: italic;
+    color: #c9bdba;
+    letter-spacing: 1px;
+    margin-bottom: 45px;
+}
+
+.main-button {
+    border: 1px solid var(--gold-dim);
+    padding: 15px 35px;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-size: 16px;
+    transition: .35s;
+    background: #10162988;
+}
+
+.main-button:hover {
+    background: #d8c2a219;
+    box-shadow: 0 0 25px #d8c2a222;
+    border-color: var(--gold);
+}
+
+/* GENERAL SECTIONS */
+
+section {
+    padding: 85px 8%;
+    scroll-margin-top: 80px;
+}
+
+.section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 37px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 19px;
+    font-style: italic;
+    margin-bottom: 50px;
+}
+
+/* NOVEL LIBRARY */
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.book-card {
+    border: 1px solid #bba58a55;
+    background: #10182bba;
+    transition: .35s;
+    overflow: hidden;
+}
+
+.book-card:hover {
+    transform: translateY(-7px);
+    border-color: var(--gold);
+    box-shadow: 0 10px 35px #0008;
+}
+
+.book-cover {
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 25px;
+    background:
+        radial-gradient(ellipse at 50% 35%, #515174, transparent 45%),
+        linear-gradient(145deg, #1e2947, #080d1b);
+    border-bottom: 1px solid #bba58a55;
+}
+
+.book-cover span {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 28px;
+    letter-spacing: 3px;
+}
+
+.book-info {
+    padding: 22px;
+}
+
+.book-info h3 {
+    color: var(--gold);
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.book-info p {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.genre {
+    color: var(--gold-dim);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 15px;
+}
+
+/* ARCHIVE SECTIONS */
+
+.archive-box {
+    max-width: 850px;
+    margin: auto;
+    padding: 45px;
+    border: 1px solid #bba58a55;
+    background: #10182b99;
+    text-align: center;
+}
+
+.archive-box p {
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+/* ABOUT */
+
+.about-text {
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+    color: #c2b9b5;
+    font-size: 21px;
+    line-height: 1.9;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid #bba58a44;
+    color: var(--gold-dim);
+    letter-spacing: 3px;
+    font-size: 14px;
+}
+
+footer .footer-star {
+    font-size: 25px;
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+    header {
+        padding: 0 5%;
+    }
+
+    .logo {
+        font-size: 15px;
+        letter-spacing: 3px;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    nav {
+        display: none;
+        position: absolute;
+        top: 81px;
+        left: 0;
+        width: 100%;
+        background: #080d1b;
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+        gap: 25px;
+        border-bottom: 1px solid #bba58a55;
+    }
+
+    nav.open {
+        display: flex;
+    }
+
+    .hero {
+        min-height: 570px;
+    }
+
+    .hero h1 {
+        letter-spacing: 3px;
+    }
+
+    .tagline {
+        font-size: 21px;
+    }
+
+    section {
+        padding: 65px 6%;
+    }
+
+    .archive-box {
+        padding: 25px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <h1>My Novel Library</h1>
-    <p>Welcome to my collections of stories.</p>
+<div class="sky"></div>
+<div class="stars"></div>
 
-    <div class="book">
-        <h2>The Bitter Hollow</h2>
-        <p>A
-    <p>Welcome to the Bitter Hollow, where magic is powerful, limits are deadly, and nobody is quite as normal as they think. Every gift comes with a price, and every curse has a purpose.</p>
-        <a href="chapter1.html">Read Chapter 1</a>
-    </div>
+<header>
+    <a class="logo" href="#home">✦ THE WRITTEN ARCHIVE</a>
+
+    <button class="menu-button" id="menuButton"
+        aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav id="navigation">
+        <a href="#home">HOME</a>
+        <a href="#library">LIBRARY</a>
+        <a href="#worlds">WORLDS</a>
+        <a href="#characters">CHARACTERS</a>
+        <a href="#about">ABOUT</a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- HOMEPAGE -->
+
+    <section class="hero" id="home">
+        <div class="hero-star">✧</div>
+        <p class="eyebrow">A universe of stories</p>
+
+        <h1>The Written Archive</h1>
+
+        <div class="line"></div>
+
+        <p class="tagline">
+            Stories worth getting lost in.
+        </p>
+
+        <a class="main-button" href="#library">
+            EXPLORE THE LIBRARY ✦
+        </a>
+    </section>
+
+    <!-- LIBRARY -->
+
+    <section id="library">
+        <h2 class="section-title">✦ Featured Novels ✦</h2>
+        <p class="section-subtitle">
+            Every story holds an entire universe.
+        </p>
+
+        <div style="max-width:1100px;margin:0 auto 30px;">
+            <input
+                id="bookSearch"
+                type="search"
+                placeholder="Search for a novel..."
+                aria-label="Search novels"
+                style="width:100%;padding:14px 18px;background:#10182b;color:#eee8e0;border:1px solid #8e7b68;font-family:inherit;font-size:18px;outline:none;">
+        </div>
+
+        <div class="book-grid" id="bookGrid">
+
+            <article class="book-card" data-search="the last enforcer science fiction dystopian">
+                <div class="book-cover">
+                    <span>THE LAST<br>ENFORCER</span>
+                </div>
+                <div class="book-info">
+                    <h3>The Last Enforcer</h3>
+                    <p>A world that has fallen, where hope is the most dangerous weapon.</p>
+                    <div class="genre">Science Fiction · Dystopian</div>
+                </div>
+            </article>
+
+            <article class="book-card" data-search="the dark age fantasy mystery">
+                <div class="book-cover">
+                    <span>THE<br>DARK AGE</span>
+                </div>
+                <div class="book-info">
+                    <h3>The Dark Age</h3>
+                    <p>When the light fades, what remains is the will to survive.</p>
+                    <div class="genre">Dark Fantasy · Mystery</div>
+                </div>
+            </article>
+
+            <article class="book-card" data-search="the pirate king adventure fantasy">
+                <div class="book-cover">
+                    <span>THE PIRATE<br>KING</span>
+                </div>
+                <div class="book-info">
+                    <h3>The Pirate King</h3>
+                    <p>A king without a crown, a crew without a home.</p>
+                    <div class="genre">Adventure · Fantasy</div>
+                </div>
+            </article>
+
+        </div>
+
+        <p id="noResults" style="display:none;text-align:center;color:#aaa;margin-top:30px;">
+            No novels found. Try another search.
+        </p>
+    </section>
+
+    <!-- WORLDS -->
+
+    <section id="worlds">
+        <h2 class="section-title">✧ Worlds & Lore ✧</h2>
+        <p class="section-subtitle">
+            Beyond the pages, entire worlds await.
+        </p>
+
+        <div class="archive-box">
+            <p>
+                Explore the histories, places, legends,
+                timelines, and secrets behind each story.
+                <br>
+                <br>
+                <span style="color:#d8c2a2;">
+                    More worlds are waiting to be discovered.
+                </span>
+            </p>
+        </div>
+    </section>
+
+    <!-- CHARACTERS -->
+
+    <section id="characters">
+        <h2 class="section-title">✦ Character Archives ✦</h2>
+        <p class="section-subtitle">
+            Every character has a story of their own.
+        </p>
+
+        <div class="archive-box">
+            <p>
+                Meet the people who inhabit these fictional
+                universes. Discover their histories,
+                personalities, relationships, and secrets.
+                <br>
+                <br>
+                <span style="color:#d8c2a2;">
+                    Character records coming soon.
+                </span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+
+    <section id="about">
+        <h2 class="section-title">✧ About the Archive ✧</h2>
+        <p class="section-subtitle">
+            A place for stories without boundaries.
+        </p>
+
+        <div class="about-text">
+            Welcome to The Written Archive.
+
+            <br><br>
+
+            A collection of fictional worlds, unforgettable
+            characters, distant galaxies, and stories waiting
+            to be told.
+
+            <br><br>
+
+            Every page is a doorway.
+            Every story is another universe.
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-star">✧</div>
+    THE WRITTEN ARCHIVE
+    <br><br>
+    <span style="font-size:12px;">
+        A JOURNEY THROUGH STORIES · EST. 2026
+    </span>
+</footer>
+
+<script>
+const menuButton = document.getElementById("menuButton");
+const navigation = document.getElementById("navigation");
+
+menuButton.addEventListener("click", () => {
+    const isOpen = navigation.classList.toggle("open");
+    menuButton.setAttribute("aria-expanded", isOpen);
+});
+
+navigation.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+        navigation.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+    });
+});
+
+// NOVEL SEARCH
+
+const searchInput = document.getElementById("bookSearch");
+const bookCards = document.querySelectorAll(".book-card");
+const noResults = document.getElementById("noResults");
+
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase().trim();
+    let visibleCount = 0;
+
+    bookCards.forEach(card => {
+        const searchText = card.dataset.search.toLowerCase();
+        const matches = searchText.includes(query);
+
+        card.style.display = matches ? "" : "none";
+
+        if (matches) visibleCount++;
+    });
+
+    noResults.style.display =
+        visibleCount === 0 ? "block" : "none";
+});
+</script>
 
 </body>
 </html>
